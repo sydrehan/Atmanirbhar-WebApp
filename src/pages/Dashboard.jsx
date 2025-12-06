@@ -53,7 +53,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <div className="h-full flex flex-col overflow-hidden relative">
+    <div className="flex flex-col h-auto min-h-screen lg:h-full lg:min-h-0 overflow-visible lg:overflow-hidden relative p-2 lg:p-0">
       {latestAlert && (
         <Toast 
           key={latestAlert.id} // Re-mount on new id
@@ -70,10 +70,10 @@ export const Dashboard = () => {
         </div>
         
         {/* View Toggle Tabs */}
-        <div className="bg-slate-800/50 p-1 rounded-lg flex items-center border border-slate-700">
+        <div className="bg-slate-800/50 p-1 rounded-lg flex items-center border border-slate-700 self-start sm:self-auto overflow-x-auto max-w-full">
           <button
             onClick={() => setActiveView('live')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'live' 
                 ? 'bg-blue-600 text-white shadow-lg' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-700'
@@ -84,7 +84,7 @@ export const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveView('disaster')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'disaster' 
                 ? 'bg-red-600 text-white shadow-lg' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-700'
@@ -95,7 +95,7 @@ export const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveView('weather')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'weather' 
                 ? 'bg-sky-500 text-white shadow-lg' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-700'
@@ -106,7 +106,7 @@ export const Dashboard = () => {
           </button>
           <button
             onClick={() => setActiveView('drills')}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'drills' 
                 ? 'bg-purple-600 text-white shadow-lg' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-700'
@@ -122,8 +122,8 @@ export const Dashboard = () => {
         <StatsCards stats={stats} />
       </div>
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 h-full flex flex-col bg-panel-bg rounded-lg border border-slate-700 overflow-hidden relative">
+      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-6 pb-4 lg:pb-0">
+        <div className="col-span-1 lg:col-span-2 h-[500px] lg:h-full flex flex-col bg-panel-bg rounded-lg border border-slate-700 overflow-hidden relative">
           {activeView === 'live' && <LiveMap nodes={nodes} />}
           {activeView === 'disaster' && <DisasterMap alerts={disasterAlerts} />}
           {activeView === 'weather' && (
@@ -134,7 +134,7 @@ export const Dashboard = () => {
           {activeView === 'drills' && <DrillStats />}
         </div>
         
-        <div className="h-full min-h-0">
+        <div className="h-[400px] lg:h-full lg:min-h-0">
           <AlertFeed alerts={systemAlerts} />
         </div>
       </div>
