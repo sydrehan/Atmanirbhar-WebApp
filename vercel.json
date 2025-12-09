@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/alerts-text",
+      "destination": "/api/alerts-text.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
