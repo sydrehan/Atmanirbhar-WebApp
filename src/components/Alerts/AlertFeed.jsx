@@ -14,15 +14,15 @@ const AlertItem = ({ alert }) => {
 
   const getColors = () => {
     switch (alert.severity) {
-      case 'critical': return 'border-disaster-red bg-disaster-red/10 text-disaster-red';
-      case 'high': return 'border-orange-500 bg-orange-500/10 text-orange-500';
-      case 'medium': return 'border-warning-yellow bg-warning-yellow/10 text-warning-yellow';
-      default: return 'border-slate-600 bg-slate-800 text-slate-400';
+      case 'critical': return 'border-disaster-red bg-red-50 dark:bg-disaster-red/10 text-disaster-red';
+      case 'high': return 'border-orange-500 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-500';
+      case 'medium': return 'border-warning-yellow bg-yellow-50 dark:bg-warning-yellow/10 text-yellow-600 dark:text-warning-yellow';
+      default: return 'border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
     }
   };
 
   return (
-    <div className={`flex items-start p-4 mb-3 rounded-md border-l-4 ${getColors()} transition-all hover:bg-slate-800/50`}>
+    <div className={`flex items-start p-4 mb-3 rounded-md border-l-4 ${getColors()} transition-all hover:bg-slate-100 dark:hover:bg-slate-700/50`}>
       <div className="mr-3 mt-1">
         {getIcon()}
       </div>
@@ -34,7 +34,7 @@ const AlertItem = ({ alert }) => {
           <div className="text-xs font-bold mb-1 opacity-90">
              Node: {alert.sender || alert.node || 'Unknown'}
           </div>
-          <p className="text-sm mt-1 text-slate-300">{alert.message}</p>
+          <p className="text-sm mt-1 text-slate-600 dark:text-slate-300">{alert.message}</p>
       </div>
     </div>
   );
@@ -42,9 +42,9 @@ const AlertItem = ({ alert }) => {
 
 export const AlertFeed = ({ alerts }) => {
   return (
-    <div className="bg-panel-bg rounded-lg border border-slate-700 shadow-lg flex flex-col h-full">
-      <div className="p-4 border-b border-slate-700 flex justify-between items-center">
-        <h3 className="font-bold text-white flex items-center">
+    <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col h-full transition-colors">
+      <div className="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+        <h3 className="font-bold text-slate-900 dark:text-white flex items-center">
           <Activity className="w-5 h-5 mr-2 text-disaster-red" />
           Live Alert Feed
         </h3>

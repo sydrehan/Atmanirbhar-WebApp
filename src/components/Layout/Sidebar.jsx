@@ -32,10 +32,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   ];
 
   return (
-    <aside className={`fixed inset-y-0 left-0 z-[2000] w-64 bg-panel-bg border-r border-slate-700 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0`}>
-      <div className="flex items-center justify-center h-20 border-b border-slate-700">
-        <h1 className="text-3xl font-black tracking-tighter text-white">
-          RES<span className="text-red-500">Q</span>
+    <aside className={`fixed inset-y-0 left-0 z-[2000] w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-0 transition-colors`}>
+      <div className="flex items-center justify-center h-20 border-b border-slate-200 dark:border-slate-700">
+        <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white">
+          RES<span className="text-red-600 dark:text-red-500">Q</span>
         </h1>
       </div>
       
@@ -48,8 +48,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 className={({ isActive }) =>
                   `flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                     isActive
-                      ? 'bg-disaster-red/10 text-disaster-red border-l-4 border-disaster-red'
-                      : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                      ? 'bg-red-50 dark:bg-disaster-red/10 text-red-600 dark:text-disaster-red border-l-4 border-red-600 dark:border-disaster-red'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                   }`
                 }
               >
@@ -61,10 +61,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-slate-700">
+      <div className="p-4 border-t border-slate-200 dark:border-slate-700">
         <button
           onClick={logout}
-          className="flex items-center w-full px-4 py-2 text-sm font-medium text-slate-400 rounded-md hover:bg-slate-800 hover:text-white transition-colors"
+          className="flex items-center w-full px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
         >
           <LogOut className="w-5 h-5 mr-3" />
           Sign Out

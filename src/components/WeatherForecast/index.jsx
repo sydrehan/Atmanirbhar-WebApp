@@ -69,7 +69,7 @@ const WeatherForecast = () => {
   };
 
   return (
-    <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700 rounded-xl overflow-hidden flex flex-col h-full shadow-lg relative group">
+    <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden flex flex-col h-full shadow-lg relative group transition-colors duration-300">
       {/* Header - Minimal */}
       <div className="absolute top-0 left-0 right-0 z-20 p-4 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
         <div className="flex items-center gap-3">

@@ -65,18 +65,18 @@ export const Dashboard = () => {
 
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0">
         <div>
-          <h2 className="text-2xl font-bold text-white">Command Center Overview</h2>
-          <p className="text-slate-400 text-sm">Real-time monitoring of disaster resilience infrastructure</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Command Center Overview</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Real-time monitoring of disaster resilience infrastructure</p>
         </div>
         
         {/* View Toggle Tabs */}
-        <div className="bg-slate-800/50 p-1 rounded-lg flex items-center border border-slate-700 self-start sm:self-auto overflow-x-auto max-w-full">
+        <div className="bg-white dark:bg-slate-800/50 p-1 rounded-lg flex items-center border border-slate-200 dark:border-slate-700 self-start sm:self-auto overflow-x-auto max-w-full shadow-sm">
           <button
             onClick={() => setActiveView('live')}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'live' 
                 ? 'bg-blue-600 text-white shadow-lg' 
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700'
             }`}
           >
             <Radio className="w-4 h-4" />
@@ -87,7 +87,7 @@ export const Dashboard = () => {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'disaster' 
                 ? 'bg-red-600 text-white shadow-lg' 
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700'
             }`}
           >
             <Activity className="w-4 h-4" />
@@ -98,7 +98,7 @@ export const Dashboard = () => {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'weather' 
                 ? 'bg-sky-500 text-white shadow-lg' 
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700'
             }`}
           >
             <CloudRain className="w-4 h-4" />
@@ -109,7 +109,7 @@ export const Dashboard = () => {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
               activeView === 'drills' 
                 ? 'bg-purple-600 text-white shadow-lg' 
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700'
             }`}
           >
             <Award className="w-4 h-4" />
@@ -123,7 +123,7 @@ export const Dashboard = () => {
       </div>
 
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-6 pb-4 lg:pb-0">
-        <div className="col-span-1 lg:col-span-2 h-[500px] lg:h-full flex flex-col bg-panel-bg rounded-lg border border-slate-700 overflow-hidden relative">
+        <div className="col-span-1 lg:col-span-2 h-[500px] lg:h-full flex flex-col bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden relative shadow-sm transition-colors">
           {activeView === 'live' && <LiveMap nodes={nodes} />}
           {activeView === 'disaster' && <DisasterMap alerts={disasterAlerts} />}
           {activeView === 'weather' && (

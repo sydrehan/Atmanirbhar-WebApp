@@ -115,25 +115,25 @@ export const LocationWeatherWidget = () => {
   const WeatherIcon = condition.icon;
 
   return (
-    <div className="h-full w-full bg-[#0B1221] rounded-3xl relative overflow-hidden flex flex-col justify-between group shadow-2xl p-6">
+    <div className="h-full w-full bg-gradient-to-br from-white to-slate-50 dark:from-[#0B1221] dark:to-[#0f172a] rounded-3xl relative overflow-hidden flex flex-col justify-between group shadow-lg dark:shadow-2xl p-6 transition-all duration-300 border border-slate-200 dark:border-slate-800">
       {/* Subtle Background Glow */}
-      <div className={`absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-20 transition-colors duration-1000 ${condition.color.replace('text-', 'bg-')}`}></div>
+      <div className={`absolute top-0 right-0 w-[400px] h-[400px] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-40 dark:opacity-20 transition-colors duration-1000 ${condition.color.replace('text-', 'bg-')}`}></div>
       
       {/* Header: Location & Time */}
       <div className="flex justify-between items-start relative z-10 w-full mb-2">
         <div className="flex items-center gap-4">
            {/* Navigation Icon Button */}
-           <div className="bg-slate-800/50 p-3 rounded-full backdrop-blur-md border border-slate-700/50 hover:bg-slate-700/50 transition-colors cursor-pointer" onClick={refreshLocation}>
-             <Navigation className="w-5 h-5 text-blue-400 transform rotate-45" />
+           <div className="bg-white/80 dark:bg-slate-800/50 p-3 rounded-full backdrop-blur-md border border-slate-200 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors cursor-pointer shadow-sm" onClick={refreshLocation}>
+             <Navigation className="w-5 h-5 text-blue-500 dark:text-blue-400 transform rotate-45" />
            </div>
            
            <div>
-             <h2 className="text-2xl font-bold text-white tracking-tight leading-tight">{weather.locationName}</h2>
+             <h2 className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight leading-tight">{weather.locationName}</h2>
              <div className="flex items-center gap-3 mt-1">
-               <span className="text-xs text-slate-400 font-mono tracking-wide">
+               <span className="text-xs text-slate-500 dark:text-slate-400 font-mono tracking-wide">
                  {location?.lat.toFixed(4)}°N, {location?.lng.toFixed(4)}°E
                </span>
-               <span className="text-[10px] bg-slate-800/80 px-2 py-0.5 rounded-full text-slate-400 border border-slate-700/50">
+               <span className="text-[10px] bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded-full text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/50 font-medium">
                   {lastUpdated ? lastUpdated.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now'}
                </span>
              </div>
@@ -142,7 +142,7 @@ export const LocationWeatherWidget = () => {
         
         <button 
            onClick={handleRefresh}
-           className="p-2 text-slate-500 hover:text-white transition-colors"
+           className="p-2 text-slate-400 hover:text-blue-600 dark:text-slate-500 dark:hover:text-white transition-colors"
            title="Refresh"
         >
            <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
@@ -154,15 +154,15 @@ export const LocationWeatherWidget = () => {
          {/* Left: Temperature & Condition */}
          <div className="flex flex-col">
             <div className="flex items-baseline">
-              <span className="text-6xl md:text-7xl lg:text-[5.5rem] leading-none font-black text-white tracking-tighter shadow-black drop-shadow-2xl transition-all duration-300">
+              <span className="text-6xl md:text-7xl lg:text-[5.5rem] leading-none font-black text-slate-900 dark:text-white tracking-tighter shadow-black drop-shadow-2xl transition-all duration-300">
                  {Math.round(weather.temp)}
-                 <span className="text-2xl md:text-3xl lg:text-4xl text-slate-400 font-light align-top ml-1">°</span>
+                 <span className="text-2xl md:text-3xl lg:text-4xl text-slate-500 dark:text-slate-400 font-light align-top ml-1">°</span>
               </span>
             </div>
             
             <div className="flex items-center gap-2 md:gap-3 mt-2">
                 <WeatherIcon className={`w-6 h-6 md:w-8 md:h-8 ${condition.color}`} />
-                <span className="text-xl md:text-2xl font-bold text-slate-200 tracking-tight">{condition.label}</span>
+                <span className="text-xl md:text-2xl font-bold text-slate-700 dark:text-slate-200 tracking-tight">{condition.label}</span>
             </div>
          </div>
          
@@ -174,18 +174,18 @@ export const LocationWeatherWidget = () => {
       </div>
 
       {/* Footer: Quick Stats (Minimal pills) */}
-      <div className="flex items-center gap-3 relative z-10 mt-auto pt-4 border-t border-slate-800/50">
-          <div className="flex items-center gap-2 bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-700/30 backdrop-blur-sm">
-            <Wind className="w-3.5 h-3.5 text-blue-400" />
-            <span className="text-xs font-bold text-slate-300">{weather.wind} km/h</span>
+      <div className="flex items-center gap-3 relative z-10 mt-auto pt-4 border-t border-slate-200 dark:border-slate-800/50">
+          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/30 backdrop-blur-sm shadow-sm dark:shadow-none">
+            <Wind className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{weather.wind} km/h</span>
           </div>
-          <div className="flex items-center gap-2 bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-700/30 backdrop-blur-sm">
-            <Droplets className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-xs font-bold text-slate-300">{weather.humidity}%</span>
+          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/30 backdrop-blur-sm shadow-sm dark:shadow-none">
+            <Droplets className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{weather.humidity}%</span>
           </div>
-          <div className="flex items-center gap-2 bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-700/30 backdrop-blur-sm">
+          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/30 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700/30 backdrop-blur-sm shadow-sm dark:shadow-none">
              <div className={`w-2 h-2 rounded-full ${weather.aqi < 50 ? 'bg-green-500' : 'bg-orange-500'}`}></div>
-             <span className="text-xs font-bold text-slate-300">AQI {weather.aqi}</span>
+             <span className="text-xs font-bold text-slate-600 dark:text-slate-300">AQI {weather.aqi}</span>
           </div>
       </div>
     </div>

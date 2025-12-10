@@ -92,44 +92,44 @@ export const DrillStats = () => {
     <div className="h-full flex flex-col gap-6 p-6 overflow-y-auto">
       {/* Top Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-blue-500/20 rounded-lg">
               <Users className="w-5 h-5 text-blue-500" />
             </div>
-            <span className="text-slate-400 text-sm font-bold uppercase">Total Drills</span>
+            <span className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase">Total Drills</span>
           </div>
-          <div className="text-3xl font-bold text-white">{stats.totalDrills}</div>
+          <div className="text-3xl font-bold text-slate-900 dark:text-white">{stats.totalDrills}</div>
         </div>
 
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-green-500/20 rounded-lg">
               <Award className="w-5 h-5 text-green-500" />
             </div>
-            <span className="text-slate-400 text-sm font-bold uppercase">Avg. Pass Rate</span>
+            <span className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase">Avg. Pass Rate</span>
           </div>
-          <div className="text-3xl font-bold text-white">{stats.avgScore}%</div>
+          <div className="text-3xl font-bold text-slate-900 dark:text-white">{stats.avgScore}%</div>
         </div>
 
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-purple-500/20 rounded-lg">
               <CheckCircle className="w-5 h-5 text-purple-500" />
             </div>
-            <span className="text-slate-400 text-sm font-bold uppercase">Top Drill</span>
+            <span className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase">Top Drill</span>
           </div>
-          <div className="text-xl font-bold text-white truncate">{stats.topDrill}</div>
+          <div className="text-xl font-bold text-slate-900 dark:text-white truncate">{stats.topDrill}</div>
         </div>
 
-        <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <div className="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-orange-500/20 rounded-lg">
               <Clock className="w-5 h-5 text-orange-500" />
             </div>
-            <span className="text-slate-400 text-sm font-bold uppercase">Avg Time</span>
+            <span className="text-slate-500 dark:text-slate-400 text-sm font-bold uppercase">Avg Time</span>
           </div>
-          <div className="text-xl font-bold text-white">
+          <div className="text-xl font-bold text-slate-900 dark:text-white">
             {stats.totalDrills > 0 
               ? formatTime(Math.round(results.reduce((acc, r) => acc + (r.timeTaken || 0), 0) / stats.totalDrills)) 
               : '-'}
@@ -139,8 +139,8 @@ export const DrillStats = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0">
         {/* Community Preparedness Chart */}
-        <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col">
-          <h3 className="text-white font-bold mb-6 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col transition-colors">
+          <h3 className="text-slate-900 dark:text-white font-bold mb-6 flex items-center gap-2">
             <PieChart className="w-5 h-5 text-blue-500" />
             Community Preparedness
           </h3>
@@ -162,39 +162,39 @@ export const DrillStats = () => {
         </div>
 
         {/* Activity Log */}
-        <div className="lg:col-span-2 bg-slate-800 rounded-xl border border-slate-700 flex flex-col overflow-hidden">
-          <div className="p-4 border-b border-slate-700">
-            <h3 className="text-white font-bold">Recent Activity Log</h3>
+        <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden transition-colors">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+            <h3 className="text-slate-900 dark:text-white font-bold">Recent Activity Log</h3>
           </div>
           <div className="overflow-y-auto flex-1 p-4">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr>
-                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-700">User</th>
-                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-700">Drill Type</th>
-                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-700">Score</th>
-                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-700">Time</th>
-                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-700">Date</th>
+                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700">User</th>
+                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700">Drill Type</th>
+                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700">Score</th>
+                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700">Time</th>
+                  <th className="p-3 text-xs font-bold text-slate-500 uppercase border-b border-slate-200 dark:border-slate-700">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {results.map((result) => (
-                  <tr key={result.id} className="hover:bg-slate-700/50 transition-colors">
-                    <td className="p-3 text-sm text-white font-medium">{result.userName}</td>
-                    <td className="p-3 text-sm text-slate-300">{result.drillTitle}</td>
+                  <tr key={result.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <td className="p-3 text-sm text-slate-900 dark:text-white font-medium">{result.userName}</td>
+                    <td className="p-3 text-sm text-slate-600 dark:text-slate-300">{result.drillTitle}</td>
                     <td className="p-3 text-sm">
                       <span className={`px-2 py-1 rounded text-xs font-bold ${
-                        (result.score / result.totalQuestions) >= 0.8 ? 'bg-green-500/20 text-green-400' : 
-                        (result.score / result.totalQuestions) >= 0.5 ? 'bg-yellow-500/20 text-yellow-400' : 
-                        'bg-red-500/20 text-red-400'
+                        (result.score / result.totalQuestions) >= 0.8 ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 
+                        (result.score / result.totalQuestions) >= 0.5 ? 'bg-yellow-500/20 text-yellow-600 dark:text-yellow-400' : 
+                        'bg-red-500/20 text-red-600 dark:text-red-400'
                       }`}>
                         {result.score}/{result.totalQuestions}
                       </span>
                     </td>
-                    <td className="p-3 text-sm text-slate-400 font-mono">
+                    <td className="p-3 text-sm text-slate-500 dark:text-slate-400 font-mono">
                       {formatTime(result.timeTaken)}
                     </td>
-                    <td className="p-3 text-sm text-slate-400 font-mono">
+                    <td className="p-3 text-sm text-slate-500 dark:text-slate-400 font-mono">
                       {new Date(result.timestamp).toLocaleDateString()}
                     </td>
                   </tr>

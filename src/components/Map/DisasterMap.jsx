@@ -106,8 +106,8 @@ export const DisasterMap = ({ alerts }) => {
 
   return (
     <div className="h-full w-full relative group">
-      {/* Search Bar Overlay - Z-Index adjusted to be below sidebar (z-50) but above map */}
-      <div className="absolute top-4 left-4 z-[400] w-64">
+      {/* Search Bar Overlay - Moved to top-right to avoid overlap with Leaflet zoom controls */}
+      <div className="absolute top-4 right-4 z-[400] w-64">
         <form onSubmit={handleSearch} className="relative">
           <input
             type="text"

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { LocationProvider } from './context/LocationContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { PrivateRoute } from './components/PrivateRoute';
 import Layout from './components/Layout';
 import { Login } from './pages/Login';
@@ -35,7 +36,8 @@ const Placeholder = ({ title }) => (
 function App() {
   return (
     <AuthProvider>
-      <LocationProvider>
+      <ThemeProvider>
+        <LocationProvider>
         <Router>
           <Routes>
             {/* Public Standalone Route - Landing Page */}
@@ -44,9 +46,9 @@ function App() {
 
             {/* Admin Routes with Layout */}
             <Route path="/admin/*" element={
-              <div className="flex bg-slate-900 h-screen w-screen overflow-hidden text-slate-100 font-sans selection:bg-blue-500/30">
+              <div className="flex bg-slate-50 dark:bg-slate-900 h-screen w-screen overflow-hidden text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-500/30 transition-colors duration-300">
                 <Sidebar />
-                <main className="flex-1 flex flex-col h-full min-w-0 bg-slate-900 relative">
+                <main className="flex-1 flex flex-col h-full min-w-0 bg-slate-50 dark:bg-slate-900 relative transition-colors duration-300">
                   <Header />
                   <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar">
                     <Routes>
@@ -74,7 +76,8 @@ function App() {
           </Routes>
         </Router>
       </LocationProvider>
-    </AuthProvider>
+    </ThemeProvider>
+  </AuthProvider>
   );
 }
 

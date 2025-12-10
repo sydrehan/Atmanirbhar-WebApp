@@ -2,7 +2,7 @@ import React from 'react';
 import { ShieldCheck, AlertTriangle, Radio, Activity } from 'lucide-react';
 
 const StatCard = ({ title, value, subtext, icon: Icon, color, bg }) => (
-  <div className="bg-panel-bg rounded-lg p-4 border border-slate-700 shadow-lg relative overflow-hidden">
+  <div className="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden transition-colors">
     <div className={`absolute top-0 right-0 p-3 opacity-10 ${color}`}>
       <Icon className="w-16 h-16" />
     </div>
@@ -15,9 +15,9 @@ const StatCard = ({ title, value, subtext, icon: Icon, color, bg }) => (
           LIVE
         </span>
       </div>
-      <h3 className="text-slate-400 text-xs font-medium uppercase tracking-wider">{title}</h3>
+      <h3 className="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">{title}</h3>
       <div className="mt-1 flex items-baseline">
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <span className="text-2xl font-bold text-slate-900 dark:text-white">{value}</span>
         <span className="ml-2 text-xs text-slate-500">{subtext}</span>
       </div>
     </div>
