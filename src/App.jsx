@@ -25,6 +25,8 @@ import Header from './components/Layout/Header';
 import { FirebaseStatus } from './components/Debug/FirebaseStatus';
 import { ReloadPrompt } from './components/ReloadPrompt';
 
+import { OnboardingTour } from './components/Onboarding/OnboardingTour';
+
 // Placeholder components for routes not yet implemented
 const Placeholder = ({ title }) => (
   <div className="p-4">
@@ -41,6 +43,7 @@ function App() {
       <ThemeProvider>
         <LocationProvider>
         <ReloadPrompt />
+        <OnboardingTour />
         <Router>
           <Routes>
             {/* Public Standalone Route - Landing Page */}
