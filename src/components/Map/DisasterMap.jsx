@@ -45,6 +45,16 @@ const MapController = ({ center, searchQuery }) => {
     map.setMinZoom(4);
   }, [map]);
 
+  // Auto-Zoom to User Location on Load
+  useEffect(() => {
+    if (location) {
+        map.flyTo([location.lat, location.lng], 8, { // Zoom 8 for State View
+            animate: true,
+            duration: 1.5
+        });
+    }
+  }, [location, map]);
+
   useEffect(() => {
     if (searchQuery) {
       // Simple geocoding using OpenStreetMap Nominatim
@@ -164,14 +174,24 @@ export const DisasterMap = ({ alerts }) => {
           </Marker>
         ))}
 
-        {/* User Location Marker */}
+        {/* User Location Marker & State Highlight */}
         {location && (
           <>
+            {/* State/Region Highlight (Large Radius) */}
+            <Circle 
+              center={[location.lat, location.lng]}
+              pathOptions={{ color: '#06b6d4', fillColor: '#06b6d4', fillOpacity: 0.1, weight: 1, dashArray: '10, 10' }}
+              radius={80000} // ~80km radius to simulate district/region highlight
+            />
+
+            {/* Accuracy Circle */}
             <Circle 
               center={[location.lat, location.lng]}
               pathOptions={{ color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.2 }}
-              radius={location.accuracy || 5000} // Larger radius for disaster map view
+              radius={location.accuracy || 5000} 
             />
+            
+            {/* Exact Location Dot */}
             <Circle 
               center={[location.lat, location.lng]}
               pathOptions={{ color: '#ffffff', fillColor: '#3b82f6', fillOpacity: 1, weight: 2 }}
