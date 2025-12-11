@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, AlertTriangle, Siren, Cloud, Sun, Loader2 } from 'lucide-react';
 import { useLocation } from '../../context/LocationContext';
+import { useTranslation } from 'react-i18next';
 
 export const SafetyStatus = ({ level = 'safe', alerts = [] }) => {
   const { location } = useLocation();
+  const { t } = useTranslation();
   const [weather, setWeather] = useState(null);
   const [locationName, setLocationName] = useState("Locating...");
   const [status, setStatus] = useState({ level: 'safe', alert: null });
@@ -98,10 +100,10 @@ export const SafetyStatus = ({ level = 'safe', alerts = [] }) => {
       bg: 'bg-[#0f172a]', 
       iconBg: 'bg-green-500', 
       icon: ShieldCheck,
-      title: 'YOU ARE SAFE',
+      title: t('status.safe'),
       sub: (
         <div className="flex flex-col">
-            <span className="opacity-80 text-xs">No threats detected near</span>
+            <span className="opacity-80 text-xs">{t('status.safe_desc')}</span>
             <span className="text-white font-bold text-base leading-tight mt-0.5">{locationName}</span>
         </div>
       ),
@@ -111,11 +113,11 @@ export const SafetyStatus = ({ level = 'safe', alerts = [] }) => {
       bg: 'bg-red-900',
       iconBg: 'bg-red-600',
       icon: Siren,
-      title: 'DANGER',
+      title: t('status.danger_title'),
       sub: (
         <div className="flex flex-col">
-             <span className="opacity-80 text-xs">IMMEDIATE THREAT:</span>
-             <span className="text-white font-bold text-base leading-tight mt-0.5">{status.alert?.title || 'Unknown Danger'}</span>
+             <span className="opacity-80 text-xs">{t('status.danger_desc')}</span>
+             <span className="text-white font-bold text-base leading-tight mt-0.5">{status.alert?.title || t('status.unknown_danger')}</span>
         </div>
       ),
       textColor: 'text-white'
@@ -140,7 +142,7 @@ export const SafetyStatus = ({ level = 'safe', alerts = [] }) => {
              <span className="w-1.5 h-1.5 rounded-full bg-green-500 mt-1 shrink-0"></span> 
              {current.sub}
           </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-none mb-2">{current.title}</h2>
+          <h2 className="text-2xl md:text-4xl font-black tracking-normal leading-loose mb-2 overflow-hidden text-ellipsis py-1">{current.title}</h2>
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-300 border border-white/10">
             Scanning Radius: 20KM
           </div>

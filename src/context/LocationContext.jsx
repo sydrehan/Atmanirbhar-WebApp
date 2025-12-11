@@ -49,8 +49,8 @@ export const LocationProvider = ({ children }) => {
         setLoading(false);
       },
       {
-        enableHighAccuracy: true,
-        timeout: 10000,
+        enableHighAccuracy: false, // Changed to false for faster/more reliable loading on non-GPS devices
+        timeout: 8000,
         maximumAge: 0
       }
     );

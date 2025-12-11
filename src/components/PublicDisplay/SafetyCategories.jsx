@@ -1,36 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Waves, Zap, Tornado, Milestone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const SafetyCategories = () => {
+  const { t } = useTranslation();
   const categories = [
     {
-      title: 'Flood',
-      desc: 'Stay prepared for flood risks.',
+      title: t('categories.flood'),
+      desc: t('categories.flood_desc'),
       icon: Waves,
       color: 'bg-blue-900',
       iconColor: 'text-white',
       link: '/drills?type=flood'
     },
     {
-      title: 'Earthquake',
-      desc: 'Understand earthquake safety protocols.',
+      title: t('categories.earthquake'),
+      desc: t('categories.earthquake_desc'),
       icon: Zap,
       color: 'bg-orange-500',
       iconColor: 'text-white',
       link: '/drills?type=earthquake'
     },
     {
-      title: 'Cyclone',
-      desc: 'Track cyclone movement and alerts.',
+      title: t('categories.cyclone'),
+      desc: t('categories.cyclone_desc'),
       icon: Tornado,
       color: 'bg-red-500',
       iconColor: 'text-white',
       link: '/drills?type=cyclone'
     },
     {
-      title: 'Evacuation Routes',
-      desc: 'Find safe evacuation paths.',
+      title: t('categories.routes'),
+      desc: t('categories.routes_desc'),
       icon: Milestone,
       color: 'bg-orange-400',
       iconColor: 'text-white',
@@ -40,7 +42,7 @@ export const SafetyCategories = () => {
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Safety Categories</h2>
+      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">{t('categories.title')}</h2>
       <div className="grid grid-cols-2 gap-4">
         {categories.map((cat, index) => (
           <Link 

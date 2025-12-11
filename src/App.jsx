@@ -19,9 +19,11 @@ import { RouteViewer } from './pages/RouteViewer';
 import { TrainingCenter } from './pages/TrainingCenter';
 import { MockDrills } from './pages/MockDrills';
 import { SatelliteLogs } from './pages/SatelliteLogs';
+import { Awareness } from './pages/Awareness';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import { FirebaseStatus } from './components/Debug/FirebaseStatus';
+import { ReloadPrompt } from './components/ReloadPrompt';
 
 // Placeholder components for routes not yet implemented
 const Placeholder = ({ title }) => (
@@ -38,11 +40,14 @@ function App() {
     <AuthProvider>
       <ThemeProvider>
         <LocationProvider>
+        <ReloadPrompt />
         <Router>
           <Routes>
             {/* Public Standalone Route - Landing Page */}
             <Route path="/" element={<PublicDisplay />} />
             <Route path="/drills" element={<MockDrills />} />
+            <Route path="/training" element={<TrainingCenter />} />
+            <Route path="/awareness" element={<Awareness />} />
 
             {/* Admin Routes with Layout */}
             <Route path="/admin/*" element={

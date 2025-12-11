@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { MobileBottomNav } from '../components/Layout/MobileBottomNav';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { CheckCircle, XCircle, Play, BookOpen, Award, ArrowLeft, ShieldAlert, Droplets, Flame, User, Timer } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getDrillTypes, saveDrillResult } from '../services/drillService';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const MockDrills = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('online');
   const [selectedDrill, setSelectedDrill] = useState(null);
@@ -147,8 +151,8 @@ export const MockDrills = () => {
             <div className="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <User className="w-8 h-8 text-blue-500" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">Mock Drill Access</h1>
-            <p className="text-slate-400 text-sm">Enter your name to start the training session as a guest.</p>
+            <h1 className="text-2xl font-bold text-white mb-2">{t('drills.guest_access')}</h1>
+            <p className="text-slate-400 text-sm">{t('drills.enter_name')}</p>
           </div>
           
           <div className="space-y-4">
@@ -169,8 +173,11 @@ export const MockDrills = () => {
               disabled={guestName.trim().length === 0}
               className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 disabled:text-slate-500 text-white font-bold py-3 rounded-lg transition-colors"
             >
-              Start Training
+              {t('drills.start_training')}
             </button>
+            <Link to="/" className="block text-center text-slate-500 hover:text-white text-sm font-bold mt-4 transition-colors">
+              {t('drills.cancel')}
+            </Link>
           </div>
         </div>
       </div>
@@ -178,26 +185,32 @@ export const MockDrills = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 p-6">
+    <div className="min-h-screen bg-slate-950 p-4 md:p-6 pb-24 md:pb-6">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Training & Mock Drills</h1>
-            <p className="text-slate-400">Enhance your preparedness with interactive drills and guides.</p>
+            <h1 className="text-3xl font-bold text-white mb-2">{t('drills.title')}</h1>
+            <p className="text-slate-400">{t('drills.subtitle')}</p>
           </div>
           {!user && (
             <div className="text-right">
-              <p className="text-slate-500 text-xs uppercase font-bold">Guest User</p>
+              <p className="text-slate-500 text-xs uppercase font-bold">{t('drills.guest_mode')}</p>
               <p className="text-white font-bold">{guestName}</p>
               <button 
                 onClick={() => setIsGuestReady(false)} 
                 className="text-blue-400 text-xs hover:underline mt-1"
               >
-                Change User
+                {t('drills.change_user')}
               </button>
             </div>
           )}
         </header>
+
+        <div className="mb-6">
+           <Link to="/" className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl hover:border-slate-700">
+              <ArrowLeft className="w-4 h-4" /> {t('drills.back_web')}
+           </Link>
+        </div>
 
         <div className="flex gap-4 mb-8">
           <button
@@ -207,7 +220,7 @@ export const MockDrills = () => {
             }`}
           >
             <Play className="w-5 h-5" />
-            Online Quiz
+            {t('drills.online_quiz')}
           </button>
           <button
             onClick={() => setActiveTab('offline')}
@@ -216,7 +229,7 @@ export const MockDrills = () => {
             }`}
           >
             <BookOpen className="w-5 h-5" />
-            Offline Drills
+            {t('drills.offline_drills')}
           </button>
         </div>
 
@@ -236,7 +249,7 @@ export const MockDrills = () => {
                     <h3 className="text-xl font-bold text-white mb-2">{drill.title}</h3>
                     <p className="text-slate-400 text-sm mb-4">{drill.description}</p>
                     <div className="flex items-center text-xs text-blue-400 font-bold uppercase tracking-wider">
-                      Start Drill <Play className="w-3 h-3 ml-1" />
+                      {t('drills.start_drill')} <Play className="w-3 h-3 ml-1" />
                     </div>
                   </button>
                 ))}
@@ -251,7 +264,7 @@ export const MockDrills = () => {
                           onClick={() => setSelectedDrill(null)}
                           className="text-slate-400 hover:text-white flex items-center gap-2 text-sm font-medium"
                         >
-                          <ArrowLeft className="w-4 h-4" /> Back to Drills
+                          <ArrowLeft className="w-4 h-4" /> {t('drills.back_drills')}
                         </button>
                         <div className="flex items-center gap-2 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
                           <Timer className="w-4 h-4 text-blue-400" />
@@ -285,21 +298,21 @@ export const MockDrills = () => {
                       <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <Award className="w-10 h-10 text-white" />
                       </div>
-                      <h2 className="text-3xl font-bold text-white mb-2">Quiz Completed!</h2>
-                      <p className="text-slate-400 mb-2">You scored {score} out of {selectedDrill.questions.length}</p>
-                      <p className="text-slate-500 text-sm mb-8 font-mono">Time Taken: {formatTime(elapsedTime)}</p>
+                      <h2 className="text-3xl font-bold text-white mb-2">{t('drills.completed')}</h2>
+                      <p className="text-slate-400 mb-2">{t('drills.score', { score, total: selectedDrill.questions.length })}</p>
+                      <p className="text-slate-500 text-sm mb-8 font-mono">{t('drills.time')}: {formatTime(elapsedTime)}</p>
                       <button
                         onClick={resetQuiz}
                         className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-bold transition-colors"
                       >
-                        Back to Menu
+                        {t('drills.back_menu')}
                       </button>
                     </div>
                   )}
                 </div>
 
                 <div className="bg-slate-900 rounded-2xl p-8 border border-slate-800 flex flex-col items-center justify-center">
-                  <h3 className="text-xl font-bold text-white mb-6">Preparedness Analysis</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('drills.analysis')}</h3>
                   {showScore ? (
                     <div className="w-full max-w-xs mx-auto aspect-square relative">
                       <Pie data={chartData} options={{ 
@@ -347,6 +360,7 @@ export const MockDrills = () => {
           </div>
         )}
       </div>
+      <MobileBottomNav active="drills" />
     </div>
   );
 };

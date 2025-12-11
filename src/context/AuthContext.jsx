@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       });
       return unsubscribe;
     } catch (err) {
-      console.warn("Firebase Auth not configured correctly. Using dev mode.", err);
+      console.info("Firebase Auth not configured (Demo Mode Active). This is expected if you haven't set up API keys.");
       setLoading(false);
     }
   }, []);

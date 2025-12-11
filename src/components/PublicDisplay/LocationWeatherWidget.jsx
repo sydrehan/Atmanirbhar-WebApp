@@ -7,6 +7,21 @@ export const LocationWeatherWidget = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [showPermissionHint, setShowPermissionHint] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (locationLoading || loading) {
+      timer = setTimeout(() => {
+        if (locationLoading) {
+           setShowPermissionHint(true);
+        }
+      }, 3000);
+    } else {
+      setShowPermissionHint(false);
+    }
+    return () => clearTimeout(timer);
+  }, [locationLoading, loading]);
 
   useEffect(() => {
     if (location) {
@@ -100,16 +115,45 @@ export const LocationWeatherWidget = () => {
 
   if (locationLoading || (loading && !weather)) {
     return (
-      <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 flex items-center justify-center h-48 animate-pulse">
-        <div className="text-center">
+      <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 flex items-center justify-center h-48 animate-pulse relative">
+        <div className="text-center z-10">
           <Loader2 className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-2" />
-          <p className="text-slate-400 text-sm">Locating & Fetching Data...</p>
+          <p className="text-slate-400 text-sm font-medium">Locating & Fetching Data...</p>
+          {showPermissionHint && (
+            <div className="mt-4">
+               <p className="text-slate-500 text-xs mb-3 animate-pulse">
+                Taking longer than expected...<br/>
+                Please allow location access.
+              </p>
+              <button 
+                onClick={refreshLocation}
+                className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-xs border border-slate-700 pointer-events-auto"
+              >
+                Retry / Manual Trigger
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
   }
 
-  if (error || !weather) return null;
+  if (error) {
+    return (
+      <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-red-500/30 p-6 text-center flex flex-col items-center justify-center h-full">
+        <MapPin className="w-8 h-8 text-red-400 mb-2" />
+        <p className="text-red-200 text-sm mb-3 font-medium">{error}</p>
+        <button 
+          onClick={refreshLocation}
+          className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors border border-slate-700"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  if (!weather) return null;
 
   const condition = getWeatherCondition(weather.code);
   const WeatherIcon = condition.icon;
