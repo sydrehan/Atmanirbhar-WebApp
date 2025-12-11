@@ -12,16 +12,50 @@ export const LocationProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [permissionStatus, setPermissionStatus] = useState('prompt');
 
+  const getIpLocation = async () => {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      if (data.latitude && data.longitude) {
+        setLocation({
+          lat: data.latitude,
+          lng: data.longitude,
+          accuracy: 5000 // Approximate accuracy for IP-based
+        });
+        setError(null);
+        setPermissionStatus('granted'); // Soft grant for functional purposes
+      } else {
+        throw new Error("Invalid IP location data");
+      }
+    } catch (err) {
+      console.warn("IP Location failed:", err);
+      // Final fallback to defaulting to India center or just error
+      setError("Unable to retrieve location. Please enable GPS.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getLocation = () => {
     setLoading(true);
+
+    // IP Fallback timeout - If GPS takes too long (~6s), switch to IP
+    const fallbackTimer = setTimeout(() => {
+        if (loading) {
+            console.warn("GPS timed out, switching to IP fallback...");
+            getIpLocation();
+        }
+    }, 6000);
+
     if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser");
-      setLoading(false);
+      clearTimeout(fallbackTimer);
+      getIpLocation();
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        clearTimeout(fallbackTimer);
         setLocation({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -32,25 +66,14 @@ export const LocationProvider = ({ children }) => {
         setPermissionStatus('granted');
       },
       (err) => {
-        let errorMsg = "Could not get your location.";
-        switch(err.code) {
-          case err.PERMISSION_DENIED:
-            errorMsg = "Location permission denied. Please enable it in your browser settings.";
-            setPermissionStatus('denied');
-            break;
-          case err.POSITION_UNAVAILABLE:
-            errorMsg = "Location information is unavailable.";
-            break;
-          case err.TIMEOUT:
-            errorMsg = "The request to get user location timed out.";
-            break;
-        }
-        setError(errorMsg);
-        setLoading(false);
+        clearTimeout(fallbackTimer);
+        console.warn("GPS Access Failed:", err.message);
+        // If GPS explicitly fails (denied/unavailable), try IP fallback immediately
+        getIpLocation();
       },
       {
-        enableHighAccuracy: false, // Changed to false for faster/more reliable loading on non-GPS devices
-        timeout: 8000,
+        enableHighAccuracy: false,
+        timeout: 5000,
         maximumAge: 0
       }
     );
