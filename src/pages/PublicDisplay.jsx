@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { OnboardingTour } from '../components/Onboarding/OnboardingTour';
 import { Link, useNavigate } from 'react-router-dom';
 import { SafetyStatus } from '../components/PublicDisplay/SafetyStatus';
 import { SafetyCategories } from '../components/PublicDisplay/SafetyCategories';
@@ -47,6 +48,7 @@ export const PublicDisplay = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col relative transition-colors duration-300 overflow-y-auto lg:overflow-hidden pb-20 lg:pb-0">
+      <OnboardingTour />
       
       {/* Main Header */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 lg:px-6 py-3 lg:py-4 flex flex-row justify-between items-center sticky top-0 z-40 transition-colors duration-300 gap-4">

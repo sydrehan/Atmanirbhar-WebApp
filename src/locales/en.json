@@ -1,4 +1,36 @@
 {
+  "onboarding": {
+    "language": {
+      "title": "Choose your Language",
+      "desc": "Select your preferred language to continue."
+    },
+    "intro": {
+      "title": "Welcome to",
+      "desc": "I am here to help you stay safe. This platform provides real-time alerts, disaster guides, and emergency contacts for your village and family.",
+      "button": "Show me around"
+    },
+    "dashboard": {
+      "title": "Live Dashboard",
+      "desc": "This is your main view. The big card shows your Current Safety Status. If there is any danger nearby, it will turn RED and tell you exactly what to do."
+    },
+    "alerts": {
+      "title": "Real-Time Alerts",
+      "desc": "We monitor satellites and ground sensors 24/7. Any urgent warnings for your location will appear in the Live Alerts Feed instantly."
+    },
+    "safety": {
+      "title": "Survival Guides",
+      "desc": "Access complete safety manuals for Earthquakes, Floods, and Cyclones. Learn what to do Before, During, and After a disaster."
+    },
+    "end": {
+      "title": "You are all set!",
+      "desc": "Explore the app freely. If you ever need help, look for the \"Help\" section. Stay safe!",
+      "button": "Get Started"
+    }
+  },
+  "common": {
+    "next": "Next",
+    "got_it": "Got it"
+  },
   "nav": {
     "drills": "Mock Drills",
     "videos": "Safety Videos",
