@@ -81,11 +81,19 @@ export const OnboardingTour = () => {
       <div className="fixed inset-0 z-[5000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         
         {/* Character Image - Always visible during tour */}
+        {/* Character Image - Always visible during tour */}
         <motion.img 
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          src="/assets/resq_assistant.png" 
+          src="/resq_assistant.png" 
+          onError={(e) => {
+            e.target.onerror = null;
+            // Fallback to a placeholder or transparent if image fails
+            e.target.style.display = 'none'; 
+            // Or better, replace with a generic robot/person icon url if available, 
+            // but for now just hide it cleanly vs broken icon
+          }}
           className="absolute bottom-0 left-4 md:left-20 h-[300px] md:h-[500px] object-contain z-[101] pointer-events-none drop-shadow-2xl"
           alt="ResQ Assistant"
         />

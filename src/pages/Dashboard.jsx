@@ -5,17 +5,22 @@ import { LiveMap } from '../components/Map/LiveMap';
 import { DisasterMap } from '../components/Map/DisasterMap';
 import { AlertFeed } from '../components/Alerts/AlertFeed';
 import { DrillStats } from '../components/Dashboard/DrillStats';
+import { FirebaseDataPanel } from '../components/Dashboard/FirebaseDataPanel';
 import WeatherForecast from '../components/WeatherForecast';
 import { useDashboardData } from '../hooks/useDashboardData';
-import { Loader2, Radio, Activity, CloudRain, Award } from 'lucide-react';
+import { useFirebaseLogs } from '../hooks/useFirebaseData'; // Import Firebase Hook
+import { playAlertSound } from '../utils/sound'; // Import Sound Util
+import { Loader2, Radio, Activity, CloudRain, Award, Database } from 'lucide-react';
 
 import { Toast } from '../components/common/Toast';
 
 export const Dashboard = () => {
   const { stats, nodes, alerts: systemAlerts, loading } = useDashboardData();
+  const { logs } = useFirebaseLogs(); // Get live logs
   const [activeView, setActiveView] = useState('live'); 
   const [disasterAlerts, setDisasterAlerts] = useState([]);
   const [latestAlert, setLatestAlert] = useState(null);
+  const lastProcessedRef = React.useRef(Date.now()); // Ref to track last processed timestamp
 
   useEffect(() => {
     const loadDisasterAlerts = async () => {
@@ -27,22 +32,51 @@ export const Dashboard = () => {
 
   // Monitor for new critical alerts to trigger Toast & Physical Tower Light
   useEffect(() => {
+    // 1. Check System Alerts (Existing logic)
     if (systemAlerts.length > 0) {
       const newsest = systemAlerts[0];
-      // Check if it's recent (within last 10 seconds to avoid showing old alerts on refresh)
       const isRecent = (Date.now() - newsest.time) < 10000; 
       
       if ((newsest.severity === 'critical' || newsest.severity === 'high') && isRecent) {
         setLatestAlert({
-          message: `${newsest.type}: ${newsest.message} (${newsest.sender})`,
-          type: newsest.severity,
-          id: newsest.id
+            message: `${newsest.type}: ${newsest.message} (${newsest.sender})`,
+            type: newsest.severity,
+            id: newsest.id
         });
-
-
       }
     }
-  }, [systemAlerts]);
+
+    // 2. Check Firebase Live Logs (New Logic for Popup + Sound)
+    if (logs) {
+        const allLogs = [
+            ...Object.values(logs.critical || {}),
+            ...Object.values(logs.rescue || {}),
+            ...Object.values(logs.receiver || {})
+        ];
+
+        // Find any log that is NEWER than our last check
+        const newLogs = allLogs.filter(log => log.timestamp > lastProcessedRef.current);
+
+        if (newLogs.length > 0) {
+            // Pick the latest one
+            const latest = newLogs.sort((a, b) => b.timestamp - a.timestamp)[0];
+            
+            // Trigger Sound
+            playAlertSound();
+
+            // Trigger Popup
+            setLatestAlert({
+                message: `ALERT: ${latest.message} (${latest.sender || 'Unknown'})`,
+                type: 'critical', // Force red for all loud alerts
+                id: `firebase-${latest.timestamp}`
+            });
+
+            // Update ref so we don't alert again for this one
+            lastProcessedRef.current = latest.timestamp;
+        }
+    }
+
+  }, [systemAlerts, logs]);
 
   if (loading) {
     return (
@@ -115,6 +149,17 @@ export const Dashboard = () => {
             <Award className="w-4 h-4" />
             Drills
           </button>
+          <button
+            onClick={() => setActiveView('sensors')}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${
+              activeView === 'sensors' 
+                ? 'bg-orange-500 text-white shadow-lg' 
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700'
+            }`}
+          >
+            <Database className="w-4 h-4" />
+            Sensor Data
+          </button>
         </div>
       </div>
 
@@ -132,6 +177,7 @@ export const Dashboard = () => {
             </div>
           )}
           {activeView === 'drills' && <DrillStats />}
+          {activeView === 'sensors' && <FirebaseDataPanel />}
         </div>
         
         <div className="h-[400px] lg:h-full lg:min-h-0">

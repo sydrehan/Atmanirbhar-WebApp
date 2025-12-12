@@ -6,6 +6,7 @@ export const LocationWeatherWidget = () => {
   const { location, error, loading: locationLoading, permissionStatus, refreshLocation } = useLocation();
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [showPermissionHint, setShowPermissionHint] = useState(false);
 
@@ -31,11 +32,13 @@ export const LocationWeatherWidget = () => {
 
   const fetchWeatherData = async (lat, lng) => {
     setLoading(true);
+    setFetchError(null);
     try {
       // 1. Fetch Weather from Open-Meteo including weathercode
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weathercode&air_quality=pm2_5`
       );
+      if (!weatherRes.ok) throw new Error("Weather API Error");
       const weatherData = await weatherRes.json();
       
       // 2. Reverse Geocoding for Place Name
@@ -72,6 +75,7 @@ export const LocationWeatherWidget = () => {
       setLastUpdated(new Date());
     } catch (err) {
       console.error("Failed to fetch weather", err);
+      setFetchError("Unable to load weather data. Please check connection.");
     } finally {
       setLoading(false);
     }
@@ -148,6 +152,21 @@ export const LocationWeatherWidget = () => {
           className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors border border-slate-700"
         >
           Try Again
+        </button>
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-orange-500/30 p-6 text-center flex flex-col items-center justify-center h-full">
+        <Cloud className="w-8 h-8 text-orange-400 mb-2" />
+        <p className="text-orange-200 text-sm mb-3 font-medium">{fetchError}</p>
+        <button 
+          onClick={handleRefresh}
+          className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-1.5 rounded-full text-xs font-medium transition-colors border border-slate-700"
+        >
+          Retry
         </button>
       </div>
     );
